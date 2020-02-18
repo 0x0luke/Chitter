@@ -14,15 +14,27 @@ class WelcomeScreen extends Component {
     }
   
     render(){
-      let welcomeString = "Welcome to Chittr";
+      let welcomeString = "Welcome to Chitter";
   
       // renders a screen containing the welcome screen above and a button to login
       return(
         <View>
-          <Text style={styles.welcomeText}>{welcomeString}</Text>
-          <Button
-          title="Login"
-          onPress={() => this.props.navigation.navigate('Login')}></Button> // switches to the login class and renders that view
+          <View style={styles.welcomeText}>
+            <Text style={styles.welcomeText}>{welcomeString}</Text>
+          </View>
+          
+          <View style={styles.LoginButton}>
+            <Button
+            title="Login"
+            style={styles.LoginButton}
+            onPress={() => this.props.navigation.navigate('Login')}></Button> 
+          <View style={styles.RegisterButton}>
+            <Button
+            title = "Register"
+            style={styles.RegisterButton}
+            onPress={()=> this.props.navigation.navigate('Register')}></Button></View>
+
+          </View>
         </View>
       );
     }
@@ -30,9 +42,31 @@ class WelcomeScreen extends Component {
 
 
   const styles = StyleSheet.create({
-    welcomeText: {
+    welcomeTextContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
       //Color: 'black',
-      fontSize: 50
+      width: 200,
+      height: 400,
+    },
+    welcomeText:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize:32,
+    },
+    RegisterButton: {
+      flexDirection:'row',
+      justifyContent: 'flex-end',
+      marginBottom: 36,
+      right: 0,
+      bottom:0,
+    },
+    LoginButton: {
+      alignItems:'center',
+      flexDirection:'row',
+      justifyContent: 'space-between',
+      left:0,
+      bottom:0,
     }
   })
 

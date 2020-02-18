@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createNavigationContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import WelcomeScreen from './screens/WelcomeScreen'
 import Login from './screens/Login'
-import HomePage from './screens/HomePage'
+import Register from './screens/Register'
+//import HomePage from './screens/HomePage'
 
 // https://www.github.com/0x0luke/Chitter 
 
@@ -14,10 +15,14 @@ const AppStackNav = createStackNavigator({
   Login:{
     screen: Login
   },
-  HomePage:{
-    screen: HomePage
+  Register:{
+    screen: Register
   }
+ /* HomePage:{
+    screen: HomePage
+  }*/
 });
+
 
 // class to get json data from the server, takes uri argument.
 class GETData extends Component {

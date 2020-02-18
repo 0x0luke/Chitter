@@ -1,13 +1,14 @@
-import { View, TextInput, Button, json, StyleSheet } from 'react-native';
+import { View, TextInput, Button, json } from 'react-native';
 import React, {Component} from 'react';
 
-class Login extends Component {
+class Register extends Component {
     constructor(props){
       super(props)
   
       this.state = {
         username: '',
-        password: ''
+        password: '',
+        email: ''
       };
     }
     // makes post request to given uri with the states defined above 
@@ -19,6 +20,7 @@ class Login extends Component {
             'Content-Type': 'application/json',
         },
         body: json.Stringify ({
+            'email': this.state.email,
             'username': this.state.username,
             'password': this.state.password
         }),
@@ -31,6 +33,7 @@ class Login extends Component {
       // renders 2 text inputs for the username and password of the user and creates a login button which calls the function above to authenticate against the database
         return(
           <View>
+          <TextInput onChangeText={text => this.setState({email: text})}>Email: </TextInput>
           <TextInput onChangeText={text => this.setState({username: text})}>Username: </TextInput>
           <TextInput onChangeText={text => this.setState({password: text})}>Password: </TextInput>
           <Button 
@@ -42,13 +45,7 @@ class Login extends Component {
         );
       }
   
+  
   }
 
-  const styles = StyleSheet.create({
-    Buttons: {
-      //Color: 'black',
-      fontSize: 50
-    }
-  })
-
-export default Login;
+export default Register;
