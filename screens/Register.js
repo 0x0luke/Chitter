@@ -41,6 +41,9 @@ class Register extends Component {
           onPress = {() => this.POSTData(Login)}
           //onPress = {console.log(this.state.username, this.state.password)}
           ></Button>
+          <Button
+          title="Register"
+          onPress={()=> this.props.navigation.navigate('Login')}></Button>
           </View>
         );
       }

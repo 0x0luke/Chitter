@@ -17,11 +17,16 @@ const AppStackNav = createStackNavigator({
   },
   Register:{
     screen: Register
-  }
+  },
  /* HomePage:{
     screen: HomePage
   }*/
-});
+},
+{
+  initialRouteName: WelcomeScreen,
+  headerMode: 'none',
+}
+);
 
 
 // class to get json data from the server, takes uri argument.
