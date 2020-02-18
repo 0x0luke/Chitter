@@ -1,0 +1,44 @@
+import React, {Component} from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import WelcomeScreen from './screens/WelcomeScreen'
+import Login from './screens/Login'
+import HomePage from './screens/HomePage'
+
+// https://www.github.com/0x0luke/Chitter 
+
+const AppStackNav = createStackNavigator({
+  Home:{
+    screen: WelcomeScreen
+  },
+  Login:{
+    screen: Login
+  },
+  HomePage:{
+    screen: HomePage
+  }
+});
+
+// class to get json data from the server, takes uri argument.
+class GETData extends Component {
+  getData(uri){
+    return fetch('http://10.0.2.2:3333/'+uri)
+      .then((response) => response.json())
+      .then((responseJson) => {
+    this.setState({
+      isLoading: false,
+      Data: responseJson,
+      });
+    })
+    .catch((error) =>{
+      console.log(error);
+    });
+    }
+}
+
+
+// crafts an app container so we can navigate around the application
+const AppContainer = createAppContainer(AppStackNav);
+
+//tells react to spawn the app container defined above.
+export default AppContainer;
