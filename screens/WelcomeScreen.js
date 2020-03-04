@@ -14,7 +14,7 @@ class WelcomeScreen extends Component {
     }
   
     render(){
-      let welcomeString = "Welcome to Chitter";
+      let welcomeString = "Chitter";
   
       // renders a screen containing the welcome screen above and a button to login
       return(

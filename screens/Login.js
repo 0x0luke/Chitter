@@ -12,7 +12,7 @@ class Login extends Component {
     }
     // makes post request to given uri with the states defined above 
     POSTData(uri){
-      return fetch('http://10.0.2.2:3333/'+uri, {
+      return fetch('http://10.0.2.2:3333/api/v0.0.5/login', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
