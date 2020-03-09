@@ -1,17 +1,20 @@
-import { View, TextInput, Button, json, StyleSheet } from 'react-native';
+import { View, TextInput, Button, json, StyleSheet, AsyncStorage } from 'react-native';
 import React, {Component} from 'react';
 
 class Login extends Component {
     constructor(props){
       super(props)
-  
+
+      this.POSTData = this.POSTData.bind(this)
+
       this.state = {
         username: '',
         password: ''
       };
     }
     // makes post request to given uri with the states defined above 
-    POSTData(uri){
+    POSTData(){
+      console.log("sending request...")
       return fetch('http://10.0.2.2:3333/api/v0.0.5/login', {
         method: 'POST',
         headers: {
@@ -21,6 +24,16 @@ class Login extends Component {
         body: json.Stringify ({
             'username': this.state.username,
             'password': this.state.password
+        })
+        .then((response) = response.json())
+        .then((responseJson) => {
+          _storeData = async () => {
+            try {
+              await AsyncStorage.setItem('x-Authorization',responseJson.token);
+            } catch(error) {
+              console.log(error);
+            }
+          };
         }),
       }).catch((error) =>{
           console.log(error);
@@ -32,15 +45,15 @@ class Login extends Component {
         return(
           <View>
           <TextInput onChangeText={text => this.setState({username: text})}>Username: </TextInput>
-          <TextInput onChangeText={text => this.setState({password: text})}>Password: </TextInput>
+          <TextInput secureTextEntry={true} onChangeText={text => this.setState({password: text})}>Password: </TextInput>
           <Button 
           title = "Login"
-          onPress = {() => this.POSTData(Login)}
-          //onPress = {console.log(this.state.username, this.state.password)}
+          onClick = {() => {this.POSTData();}}
+          onClick = {console.log(this.state.username, this.state.password)}
           ></Button>
           <Button
           title="Register"
-          onPress={()=>this.props.navigation.navigate('Register')}>Register</Button>
+          onClick={()=>this.props.navigation.navigate('Register')}>Register</Button>
           </View>
         );
       }

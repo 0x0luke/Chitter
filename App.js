@@ -23,29 +23,10 @@ const AppStackNav = createStackNavigator({
   }*/
 },
 {
-  initialRouteName: WelcomeScreen,
+  initialRouteParams: WelcomeScreen,
   headerMode: 'none',
 }
 );
-
-
-// class to get json data from the server, takes uri argument.
-class GETData extends Component {
-  getData(uri){
-    return fetch('http://10.0.2.2:3333/'+uri)
-      .then((response) => response.json())
-      .then((responseJson) => {
-    this.setState({
-      isLoading: false,
-      Data: responseJson,
-      });
-    })
-    .catch((error) =>{
-      console.log(error);
-    });
-    }
-}
-
 
 // crafts an app container so we can navigate around the application
 const AppContainer = createAppContainer(AppStackNav);
