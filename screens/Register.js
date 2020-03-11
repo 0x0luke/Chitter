@@ -1,6 +1,7 @@
 import { View, TextInput, Button, json } from 'react-native';
 import React, {Component} from 'react';
 
+
 class Register extends Component {
     constructor(props){
       super(props)
@@ -15,7 +16,7 @@ class Register extends Component {
       };
     }
     // makes post request to given uri with the states defined above 
-    POSTData(){
+    POSTData = () => {
       return fetch('http://10.0.2.2:3333/api/v0.0.5/user', {
         method: 'POST',
         headers: {
@@ -27,24 +28,27 @@ class Register extends Component {
             'family_name': this.state.family,
             'email': this.state.email,
             'password': this.state.password
-        }),
-      }).catch((error) =>{
+        })
+      }).then((response) => {
+          Alert.alert("Account Created!")
+      }).catch((error) => {
           console.log(error);
-        });
-      }
+      });
+    }
       
       render(){
       // renders 4 text inputs for the username and password of the user and creates a register button to navigate to the register page.
         return(
           <View>
-          <TextInput onChangeText={text => this.setState({email: text})}>Email: </TextInput>
-          <TextInput onChangeText={text => this.setState({username: text})}>Username: </TextInput>
-          <TextInput onChangeText={text => this.setState({family: text})}>Family Name: </TextInput>
-          <TextInput onChangeText={text => this.setState({password: text})}>Password: </TextInput>
+          <TextInput type='text' placeholder='Email' onChangeText={text => this.setState({email: text})}></TextInput>
+          <TextInput type='text' placeholder='Username' onChangeText={text => this.setState({username: text})}></TextInput>
+          <TextInput type='text' placeholder='Family Name' onChangeText={text => this.setState({family: text})}></TextInput>
+          <TextInput type='password' placeholder='Password' secureTextEntry={true} onChangeText={text => this.setState({password: text})}></TextInput>
           <Button
           title="Register"
-          onClick={()=> this.props.navigation.navigate('Login') }
-          onClick={()=> {this.POSTData();}}></Button>
+          onClick={()=> {this.POSTData}}
+          onPress={()=> this.props.navigation.navigate('Login')}
+          ></Button>
           </View>
         );
       }

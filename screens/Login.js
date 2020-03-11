@@ -13,7 +13,7 @@ class Login extends Component {
       };
     }
     // makes post request to given uri with the states defined above 
-    POSTData(){
+    POSTData = () =>{
       console.log("sending request...")
       return fetch('http://10.0.2.2:3333/api/v0.0.5/login', {
         method: 'POST',
@@ -29,7 +29,7 @@ class Login extends Component {
         .then((responseJson) => {
           _storeData = async () => {
             try {
-              await AsyncStorage.setItem('x-Authorization',responseJson.token);
+              await AsyncStorage.setItem('X-Authorization',responseJson.token);
             } catch(error) {
               console.log(error);
             }
@@ -44,16 +44,16 @@ class Login extends Component {
       // renders 2 text inputs for the username and password of the user and creates a login button which calls the function above to authenticate against the database
         return(
           <View>
-          <TextInput onChangeText={text => this.setState({username: text})}>Username: </TextInput>
-          <TextInput secureTextEntry={true} onChangeText={text => this.setState({password: text})}>Password: </TextInput>
+          <TextInput placeholder='Username' onChangeText={text => this.setState({username: text})}></TextInput>
+          <TextInput placeholder='Password' secureTextEntry={true} title={"Password"} onChangeText={text => this.setState({password: text})}></TextInput>
           <Button 
           title = "Login"
-          onClick = {() => {this.POSTData();}}
-          onClick = {console.log(this.state.username, this.state.password)}
+          onPress = {() => {this.POSTData}}
+          onPress = {console.log(this.state.username, this.state.password)}
           ></Button>
           <Button
           title="Register"
-          onClick={()=>this.props.navigation.navigate('Register')}>Register</Button>
+          onPress={()=>this.props.navigation.navigate('Register')}>Register</Button>
           </View>
         );
       }

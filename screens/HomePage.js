@@ -12,7 +12,7 @@ class HomePage extends Compoment {
     render(){
         return(
             <View>
-                <Text>This is the homepage</Text>
+                <Text>This is the homepage, display chitts here</Text>
             </View>
         )
     }
