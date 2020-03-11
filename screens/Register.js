@@ -5,8 +5,6 @@ import React, {Component} from 'react';
 class Register extends Component {
     constructor(props){
       super(props)
-
-      this.POSTData = this.POSTData.bind(this)
   
       this.state = {
         family: '',

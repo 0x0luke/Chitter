@@ -5,8 +5,6 @@ class Login extends Component {
     constructor(props){
       super(props)
 
-      this.POSTData = this.POSTData.bind(this)
-
       this.state = {
         username: '',
         password: ''
