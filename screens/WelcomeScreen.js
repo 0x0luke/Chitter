@@ -11,12 +11,6 @@ class WelcomeScreen extends Component {
     static navigationOptions = {
         header: null
     }
-
-    handleChange = (e) => {
-      this.setState({
-        [e.target.name]: e.target.value
-      })
-    }
   
     render(){
       let welcomeString = "Chitter";
