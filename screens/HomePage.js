@@ -1,20 +1,71 @@
-import React, {Compoment} from 'react';
-import { Text, View } from 'react-native';
+import React, {Compoment, AsyncStorage} from 'react';
+import { Text, View, FlatList } from 'react-native';
+
+
+/*
+[
+  {
+    "chit_id": 0,
+    "timestamp": 0,
+    "chit_content": "string",
+    "location": {
+      "longitude": 0,
+      "latitude": 0
+    },
+    "user": {
+      "user_id": 0,
+      "given_name": "string",
+      "family_name": "string",
+      "email": "string"
+    }
+  }
+] */
 
 class HomePage extends Compoment {
     constructor(props){
         super(props)
         this.state = {
-          login: true
+          login: true,
+          authkey: '',
+          chits: '',
+          loading: true,
         }
+      }
+
+      getPosts = () => {
+        var auth = await AsyncStorage.getItem("X-Authorization");
+
+        this.setState({ authkey: auth });
+
+        return fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {
+          method: 'GET',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'X-Authorization': this.state.authkey,
+          },
+        }).then((response) => {
+          if ((response) != null) {
+            console.log(response);
+          this.setState({
+            chits: JSON.stringify(response),
+            loading:false
+          })
+        }
+        }).catch((error) => {
+            console.log(error);
+        });
       }
     
     render(){
         return(
             <View>
-                <Text>This is the homepage, display chitts here</Text>
+              <FlatList>
+                key = {item => item.id}
+                data = {this.state.chits.chit_content}
+              </FlatList>
             </View>
-        )
+        );
     }
 
 }

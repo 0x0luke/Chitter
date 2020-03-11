@@ -43,7 +43,7 @@ class Login extends Component {
         return(
           <View>
           <TextInput placeholder='Username' onChangeText={text => this.setState({username: text})}></TextInput>
-          <TextInput placeholder='Password' secureTextEntry={true} title={"Password"} onChangeText={text => this.setState({password: text})}></TextInput>
+          <TextInput placeholder='Password' secureTextEntry={true} onChangeText={text => this.setState({password: text})}></TextInput>
           <Button 
           title = "Login"
           onPress = {() => {this.POSTData}}
