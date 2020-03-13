@@ -2,7 +2,7 @@ import React, {Compoment, AsyncStorage} from 'react';
 import { Text, View, FlatList } from 'react-native';
 
 
-/*
+/* json response format
 [
   {
     "chit_id": 0,
@@ -24,16 +24,18 @@ import { Text, View, FlatList } from 'react-native';
 class HomePage extends Compoment {
     constructor(props){
         super(props)
+
         this.state = {
           login: true,
           authkey: '',
           chits: '',
           loading: true,
         }
+        
       }
 
       getPosts = () => {
-        var auth = await AsyncStorage.getItem("X-Authorization");
+        var auth = AsyncStorage.getItem("X-Authorization");
 
         this.setState({ authkey: auth });
 
@@ -55,6 +57,10 @@ class HomePage extends Compoment {
         }).catch((error) => {
             console.log(error);
         });
+      }
+
+      compomentDidMount() {
+        this.getPosts();
       }
     
     render(){
