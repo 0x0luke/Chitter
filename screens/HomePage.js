@@ -49,11 +49,11 @@ class HomePage extends Compoment {
         }).then((response) => {
           if ((response) != null) {
             console.log(response);
-          this.setState({
+            this.setState({
             chits: JSON.stringify(response),
             loading:false
-          })
-        }
+            })
+          }
         }).catch((error) => {
             console.log(error);
         });

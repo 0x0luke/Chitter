@@ -30,7 +30,8 @@ class Login extends Component {
           _storeData = async () => {
             try {
               AsyncStorage.setItem('X-Authorization',responseJson.token);
-              console.log("OUR RESPONSE TOKEN IS: " + responseJson.token);
+              AsyncStorage.setItem('id', responseJson.id);
+              console.log("OUR AUTH TOKEN IS: " + responseJson.token + "&" + "OUR ID IS: "+ responseJson.id +", STORED VALUES IN ASYNCSTORAGE");
             } catch(error) {
               console.log(error);
             }     
