@@ -21,12 +21,11 @@ const AppStackNav = createStackNavigator({
  /* HomePage:{
     screen: HomePage
   }*/
-},
-{
-  initialRouteParams: WelcomeScreen,
-  headerMode: 'none',
-}
-);
+  },
+  {
+    initialRouteParams: WelcomeScreen,
+    headerMode: 'none',
+  });
 
 // crafts an app container so we can navigate around the application
 const AppContainer = createAppContainer(AppStackNav);

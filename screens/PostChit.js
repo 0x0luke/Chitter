@@ -24,6 +24,7 @@ class PostChit extends Component {
 
     // pull in geolocation coords
     findCoords = () => {
+      let location = null;
       Geolocation.getCurrentPosition(
           (position) => {
               const location = JSON.stringify(position);
