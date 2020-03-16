@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { Text, View, AsyncStorage, Alert, Button, TextInput } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 
 
@@ -12,6 +12,7 @@ class PostChit extends Component {
         // Binds the functions below so they're accessible from render()
         this.postChit = this.PostChit.bind(this);
         this.findCoords = this.findCoords.bind(this);
+        let location = null;
 
         this.state = {
             authkey: '',
@@ -24,7 +25,6 @@ class PostChit extends Component {
 
     // pull in geolocation coords
     findCoords = () => {
-      let location = null;
       Geolocation.getCurrentPosition(
           (position) => {
               const location = JSON.stringify(position);
@@ -53,24 +53,6 @@ class PostChit extends Component {
           userid: id,
         });
 
-        /*
-          {
-            "chit_id": 0,
-            "timestamp": 0,
-            "chit_content": "string",
-            "location": {
-              "longitude": 0,
-              "latitude": 0
-            },
-            "user": {
-              "user_id": 0,
-              "given_name": "string",
-              "family_name": "string",
-              "email": "string"
-            }
-          }
-*/
-
         return fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {
             method: 'POST',
             headers: {
@@ -79,10 +61,18 @@ class PostChit extends Component {
                 'X-Authorization': this.state.authkey,
             },
             body: JSON.stringify({
-                
+              
+              chit_id: 1,
+              timestamp: today,
+              chit_content: this.state.chit,
+              location: this.state.location,
+
             })
+        }).then((response) => {
+            Alert.alert("Posted Chit!");
+            this.props.navigation.navigate("HomePage");
         })
-    }
+    };
 
   componentDidMount(){
     this.findCoords()
@@ -96,6 +86,11 @@ class PostChit extends Component {
         <View>
 
             <h3>Post a Chit</h3>
+
+           <TextInput placeholder='Chit_Content' onChangeText={(chit) => this.setState({chit})}></TextInput>
+           <Button
+           onPress={this.PostChit}
+           ></Button>
 
         </View>
 
