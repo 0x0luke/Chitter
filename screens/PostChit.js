@@ -47,7 +47,6 @@ class PostChit extends Component {
         // gets the current date in unix/epoch time
         var today = Date.parse(new Date())
 
-
         this.setState({
           authkey: auth,
           userid: id,
@@ -61,7 +60,7 @@ class PostChit extends Component {
                 'X-Authorization': this.state.authkey,
             },
             body: JSON.stringify({
-              
+
               chit_id: 1,
               timestamp: today,
               chit_content: this.state.chit,

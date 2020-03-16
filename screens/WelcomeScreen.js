@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 class WelcomeScreen extends Component {
     constructor(props){
       super(props)
@@ -19,6 +19,9 @@ class WelcomeScreen extends Component {
       return(
         <View>
           <View style={styles.welcomeText}>
+            <Image style = {{width: 200, height: 200}}
+            source={require('../images/chitterlogo.png')}
+            ></Image>
             <Text style={styles.welcomeText}>{welcomeString}</Text>
           </View>
             <View style={styles.LoginButton}>
