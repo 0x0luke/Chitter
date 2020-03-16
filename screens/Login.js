@@ -13,34 +13,36 @@ class Login extends Component {
       };
     }
     // makes post request to given uri with the states defined above 
-    login(){
+    async login(){
       console.log("sending request...")
-      return fetch('http://10.0.2.2:3333/api/v0.0.5/login', {
-        method: 'POST',
-        headers: {
+      try {
+        return fetch('http://10.0.2.2:3333/api/v0.0.5/login', {
+          method: 'POST',
+          headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify ({
+          },
+          body: JSON.stringify({
             username: this.state.username,
             password: this.state.password
-        })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          _storeData = async () => {
-            try {
-              AsyncStorage.setItem('X-Authorization',responseJson.token);
-              AsyncStorage.setItem('id', responseJson.id);
-              console.log("OUR AUTH TOKEN IS: " + responseJson.token + "&" + "OUR ID IS: "+ responseJson.id +", STORED VALUES IN ASYNCSTORAGE");
-            } catch(error) {
-              console.log(error);
-            }     
-          };
-          this.props.navigation.navigate('HomePage');
-        }),
-      }).catch((error) =>{
-          console.log(error);
+          })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              try {
+                AsyncStorage.setItem('X-Authorization', responseJson.token);
+                AsyncStorage.setItem('id', responseJson.id);
+                console.log("OUR AUTH TOKEN IS: " + responseJson.token + "&" + "OUR ID IS: " + responseJson.id + ", STORED VALUES IN ASYNCSTORAGE");
+              }
+              catch (error) {
+                console.log(error);
+              }
+              this.props.navigation.navigate('HomePage');
+            }),
         });
+      }
+      catch (ASyncError) {
+        console.log(ASyncError);
+      }
       }
 
       render(){

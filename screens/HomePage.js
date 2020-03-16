@@ -1,5 +1,5 @@
 import React, {Compoment, AsyncStorage} from 'react';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
 
 class HomePage extends Compoment {
     constructor(props){
@@ -38,6 +38,7 @@ class HomePage extends Compoment {
             console.log(response);
             this.setState({
               jsonData: responseJson,
+              loading: false,
             })
           }
         }).catch((error) => {
@@ -87,7 +88,15 @@ class HomePage extends Compoment {
 
 
       render(){
-          return(
+            if(this.state.loading){
+              return(
+                <View>
+                  <ActivityIndicator/>
+                </View>
+                )
+              }
+
+              return(
               <View>
                 {this.state.jsonData.map(item => this.renderChits(item))}
               </View>
