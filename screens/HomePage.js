@@ -5,6 +5,11 @@ class HomePage extends Compoment {
     constructor(props){
         super(props)
 
+        // binds the functions so they're able to access the state.
+        this.getPosts() = this.getPosts.bind(this);
+        this.compomentDidMount() = this.compomentDidMount.bind(this);
+        this.renderChits(obj) = this.renderChits.bind(this);
+
         this.state = {
           login: true,
           authkey: '',
@@ -15,21 +20,20 @@ class HomePage extends Compoment {
         
       }
 
-      
+      //gets chits from api
+  getPosts = () => {
+      var auth = AsyncStorage.getItem("X-Authorization");
 
-      getPosts = () => {
-        var auth = AsyncStorage.getItem("X-Authorization");
+      this.setState({ 
+         authkey: auth 
+      });
 
-        this.setState({ 
-          authkey: auth 
-        });
-
-        return fetch('http://10.0.2.2:3333/api/v0.0.5/chits?start=0&count=50', {
-          method: 'GET',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'X-Authorization': this.state.authkey,
+      return fetch('http://10.0.2.2:3333/api/v0.0.5/chits?start=0&count=50', {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-Authorization': this.state.authkey,
           },
         })
         .then((response) => response.json())
@@ -46,11 +50,12 @@ class HomePage extends Compoment {
         });
       };
 
+      // waits to see until the compoment is opened, then runs the function to get the chits from the API
       compomentDidMount() {
         this.getPosts();
       }
 
-    
+      // this function crafts an object for each chit so it can be rendered in a view.
       renderChits(obj){
         return(
 
@@ -62,32 +67,13 @@ class HomePage extends Compoment {
               <Text>{item.location}</Text>
             </View>
           </View>
-          /* do rendering such as 
-
-          <View style={styles.itemBlock}>
-            <View style={styles.itemMeta}>
-              <Text style={styles.itemName}>{item.RxDrugName}</Text>
-              <Text style={styles.itemLastMessage}>{item.RxNumber}</Text>
-            </View>
-
-            <View style={styles.footerStyle}>
-              <View style={{ paddingVertical: 10 }}>
-                <Text style={styles.status}>{ item.StoreNumber }</Text>
-              </View>
-
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={require('../assets/right_arrow_blue.png')} />
-              </View>
-
-            </View>
-        </View>
-
-          */
         );
       }
 
-
+// actual render function
       render(){
+
+        // this algorithm displays a loading symbol until all the chits have been pulled down from the API and processed on the device.
             if(this.state.loading){
               return(
                 <View>
@@ -95,7 +81,8 @@ class HomePage extends Compoment {
                 </View>
                 )
               }
-
+              
+              // this return makes it so each chit returned from the API is displayed on the page.
               return(
               <View>
                 {this.state.jsonData.map(item => this.renderChits(item))}
