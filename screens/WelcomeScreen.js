@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 class WelcomeScreen extends Component {
     constructor(props){
       super(props)
@@ -13,27 +13,29 @@ class WelcomeScreen extends Component {
     }
   
     render(){
-      let welcomeString = "Chitter";
   
       // renders a screen containing the welcome screen above and a button to login
       return(
         <View>
           <View style={styles.welcomeText}>
-            <Image style = {{width: 200, height: 200}}
+            <Image style = {{width: 200, height: 200, marginHorizontal:106, marginTop: 100}}
             source={require('../images/chitterlogo.png')}
             ></Image>
-            <Text style={styles.welcomeText}>{welcomeString}</Text>
           </View>
-            <View style={styles.LoginButton}>
-              <Button
+            <View>
+              <TouchableOpacity
+              style={styles.LoginButton}
               title="Login"
               onPress={()=>this.props.navigation.navigate('Login')}>
-              </Button> 
-            <View style={styles.RegisterButton}>
-              <Button
-              title = "Register"
+                <Text style={styles.ButtonTextStyle}>Login</Text>
+              </TouchableOpacity> 
+            <View>
+              <TouchableOpacity
+              style={styles.RegisterButton}
+              title = "Register"      
               onPress={()=>this.props.navigation.navigate('Register')}>
-              </Button>
+                <Text style={styles.ButtonTextStyle}>Register</Text>
+              </TouchableOpacity>
               </View>
 
           </View>
@@ -44,22 +46,37 @@ class WelcomeScreen extends Component {
 
 
   const styles = StyleSheet.create({
-    ButtonContainer:{
-      flexDirection: "row",
-    },
-    welcomeText:{
+    ButtonTextStyle:{
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize:32,
+      fontSize:20,
+      textAlign: 'center',
+      color:'#ffffff',
     },
     RegisterButton: {
-      justifyContent: 'flex-end',
+      flex:1,
+      justifyContent: 'center',
       marginBottom: 36,
-      bottom:0,
+      marginTop:  12,
+      marginHorizontal: 84,
+      fontSize: 20,
+      color:'#ffffff',
+      textAlign:'center',
+      padding:20,
+      backgroundColor: '#202646',
+      borderRadius:5
     },
     LoginButton: {
-      alignItems:'center',
-      bottom:0,
+      flex: 1,
+      justifyContent: 'center',
+      marginTop: 200,
+      marginHorizontal: 84,
+      fontSize: 20,
+      color:'#ffffff',
+      textAlign:'center',
+      padding:20,
+      backgroundColor: '#202646',
+      borderRadius:5
     }
   })
 

@@ -1,72 +1,86 @@
-import React, {Compoment, AsyncStorage} from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
+import React, {Component} from 'react';
+import { Text, View, ActivityIndicator,Alert, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-community/async-storage';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-class HomePage extends Compoment {
+class HomePage extends Component {
     constructor(props){
-        super(props)
+        super(props);
 
         // binds the functions so they're able to access the state.
-        this.getPosts() = this.getPosts.bind(this);
-        this.compomentDidMount() = this.compomentDidMount.bind(this);
-        this.renderChits(obj) = this.renderChits.bind(this);
-
+        this.getPosts = this.getPosts.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.renderChits = this.renderChits.bind(this);
         this.state = {
           login: true,
           authkey: '',
-          chits: '',
           loading: true,
-          jsonData: '',
+          jsonData: [],
         }
         
       }
 
-      //gets chits from api
-  getPosts = () => {
-      var auth = AsyncStorage.getItem("X-Authorization");
+      async getCreds(){
+        try{
+          var getAuthKey = await AsyncStorage.getItem('X-Authorization');
 
-      this.setState({ 
-         authkey: auth 
-      });
+          console.log(getAuthKey);
 
-      return fetch('http://10.0.2.2:3333/api/v0.0.5/chits?start=0&count=50', {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'X-Authorization': this.state.authkey,
-          },
-        })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          if ((response) != null) {
-            console.log(response);
-            this.setState({
-              jsonData: responseJson,
-              loading: false,
-            })
-          }
-        }).catch((error) => {
-            console.log(error);
+          this.setState({ 
+            authkey: getAuthKey
+         });
+        }
+        catch(error){
+          console.log("Error within Async: "+error);
+          Alert.alert("There was an issue with getting authentication data from the storage...");
+        }
+      }
+
+      getPosts(){
+        return fetch('http://10.0.2.2:3333/api/v0.0.5/chits')
+       .then((response) => response.json())
+       .then((responseJson) => {
+      
+        this.setState({
+         loading: false,
+         jsonData: responseJson,
         });
-      };
+         
+       })
+       .catch((error) =>{
+        console.log(error);
+       });
+      }
 
       // waits to see until the compoment is opened, then runs the function to get the chits from the API
-      compomentDidMount() {
+      componentDidMount() {
+        this.getCreds();
         this.getPosts();
       }
 
       // this function crafts an object for each chit so it can be rendered in a view.
-      renderChits(obj){
+      renderChits(item){
+        console.log("renderChits called...")
         return(
-
           <View>
             <View>
-              <Text>{item.user.given_name}</Text>
-              <Text>{item.user.family_name}</Text>
-              <Text>{item.chit_content}</Text>
-              <Text>{item.location}</Text>
+              <SafeAreaView style={style.scrollable}>
+                <Text>{item.user.given_name}</Text>
+                <Text>{item.user.family_name}</Text>
+                <Text>{item.chit_content}</Text>
+                <Text>{item.location}</Text>
+              </SafeAreaView>
+              </View>
+
+            <View>
+              <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('PostChit')}
+              title="Post Chit"
+              style={style.PostChitButton}
+              ><Text style={style.ButtonTextStyle}>Post Chit</Text></TouchableOpacity>
             </View>
-          </View>
+            </View>
         );
       }
 
@@ -75,6 +89,7 @@ class HomePage extends Compoment {
 
         // this algorithm displays a loading symbol until all the chits have been pulled down from the API and processed on the device.
             if(this.state.loading){
+              console.log("We're in a loading state")
               return(
                 <View>
                   <ActivityIndicator/>
@@ -82,13 +97,45 @@ class HomePage extends Compoment {
                 )
               }
               
+              
               // this return makes it so each chit returned from the API is displayed on the page.
               return(
               <View>
                 {this.state.jsonData.map(item => this.renderChits(item))}
               </View>
+              
           );
       }
 
 }
+
+const style = StyleSheet.create(
+  {
+    scrollable:
+    {
+      marginBottom:100,
+      //marginHorizonal: 20
+    },
+    ButtonTextStyle:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize:20,
+      textAlign: 'center',
+      color:'#ffffff',
+    },
+    PostChitButton: {
+      flex:1,
+      justifyContent: 'center',
+      marginBottom: 36,
+      marginTop:  12,
+      marginHorizontal: 84,
+      fontSize: 20,
+      color:'#ffffff',
+      textAlign:'center',
+      padding:20,
+      backgroundColor: '#202646',
+      borderRadius:5
+    },
+  }
+)
 export default HomePage;

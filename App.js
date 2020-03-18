@@ -4,7 +4,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import WelcomeScreen from './screens/WelcomeScreen'
 import Login from './screens/Login'
 import Register from './screens/Register'
-//import HomePage from './screens/HomePage'
+import HomePage from './screens/HomePage'
+import PostChit from './screens/PostChit'
 
 // https://www.github.com/0x0luke/Chitter 
 
@@ -18,13 +19,16 @@ const AppStackNav = createStackNavigator({
   Register:{
     screen: Register
   },
- /* HomePage:{
+ HomePage:{
     screen: HomePage
-  }*/
+  },
+  PostChit:{
+    screen: PostChit
+  },
   },
   {
     initialRouteParams: WelcomeScreen,
-    headerMode: 'none',
+    headerShown: false,
   });
 
 // crafts an app container so we can navigate around the application
