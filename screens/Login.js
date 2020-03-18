@@ -31,7 +31,7 @@ class Login extends Component {
         await AsyncStorage.setItem('id', id.toString());
         await AsyncStorage.setItem('X-Authorization', token.toString());
 
-        this.props.navigation.navigate('HomePage');
+        this.props.navigation.navigate('LandingPage');
       }
       catch(error){
         console.log("Error within Async: "+error);

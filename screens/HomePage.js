@@ -64,23 +64,12 @@ class HomePage extends Component {
         console.log("renderChits called...")
         return(
           <View>
-            <View>
               <SafeAreaView style={style.scrollable}>
-                <Text>{item.user.given_name}</Text>
-                <Text>{item.user.family_name}</Text>
-                <Text>{item.chit_content}</Text>
-                <Text>{item.location}</Text>
+                <Text style={style.NameStyle}>{item.user.given_name + " "+ item.user.family_name}</Text>
+                <Text style={style.LocationAndChitStyle}>{item.chit_content}</Text>
+                <Text style={style.LocationAndChitStyle}>{item.location}</Text>
               </SafeAreaView>
-              </View>
-
-            <View>
-              <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('PostChit')}
-              title="Post Chit"
-              style={style.PostChitButton}
-              ><Text style={style.ButtonTextStyle}>Post Chit</Text></TouchableOpacity>
-            </View>
-            </View>
+          </View>
         );
       }
 
@@ -101,7 +90,13 @@ class HomePage extends Component {
               // this return makes it so each chit returned from the API is displayed on the page.
               return(
               <View>
-                {this.state.jsonData.map(item => this.renderChits(item))}
+              {this.state.jsonData.map(item => this.renderChits(item))}
+                
+              <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('PostChit')}
+              title="Post Chit"
+              style={style.PostChitButton}
+              ><Text style={style.ButtonTextStyle}>Post Chit</Text></TouchableOpacity>
               </View>
               
           );
@@ -113,8 +108,20 @@ const style = StyleSheet.create(
   {
     scrollable:
     {
-      marginBottom:100,
+      marginBottom:5,
+      borderWidth: 2,
+      borderColor:'#202646',
+      borderRadius: 20,
       //marginHorizonal: 20
+    },
+    NameStyle:{
+      fontSize:18,
+      marginLeft:8,
+      marginTop:5,
+    },
+    LocationAndChitStyle:{
+      fontSize:14,
+      marginLeft: 8,
     },
     ButtonTextStyle:{
       alignItems: 'center',
@@ -124,10 +131,10 @@ const style = StyleSheet.create(
       color:'#ffffff',
     },
     PostChitButton: {
-      flex:1,
+      flex: 1,
       justifyContent: 'center',
       marginBottom: 36,
-      marginTop:  12,
+      //marginTop:  70,
       marginHorizontal: 84,
       fontSize: 20,
       color:'#ffffff',
