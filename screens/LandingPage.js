@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -62,17 +62,26 @@ class LandingPage extends Component {
         return(
             <View>
                 <Text style={style.welcomeMessage}>Welcome, {this.state.username}</Text>
+                <Image style = {{width: 150, height: 150, marginHorizontal:130, marginTop: 10, justifyContent:'center'}}
+                  source={require('../images/chitterlogo.png')}
+                ></Image>
                 <TouchableOpacity
                     style={style.ReadChitStyle}
-                    title="HomePage"
+                    title="Home Page"
                     onPress={()=>this.props.navigation.navigate('HomePage')}>
                 <Text style={style.ButtonTextStyle}>Read your Chits</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={style.PostChitStyle}
-                    title="PostChit"
+                    title="Post Chit"
                     onPress={()=>this.props.navigation.navigate('PostChit')}>
                 <Text style={style.ButtonTextStyle}>Post a Chit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={style.SearchButtStyle}
+                    title="Search"
+                    onPress={()=>this.props.navigation.navigate('Search')}>
+                <Text style={style.ButtonTextStyle}>Search for a User</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={style.EditAccButtStyle}
@@ -99,7 +108,19 @@ const style = StyleSheet.create(
         ReadChitStyle: {
             flex: 1,
             justifyContent: 'center',
-            marginTop: 206,
+            marginTop: 24,
+            marginHorizontal: 84,
+            fontSize: 20,
+            color:'#ffffff',
+            textAlign:'center',
+            padding:20,
+            backgroundColor: '#202646',
+            borderRadius:5
+          },
+          SearchButtStyle: {
+            flex: 1,
+            justifyContent: 'center',
+            marginTop: 24,
             marginHorizontal: 84,
             fontSize: 20,
             color:'#ffffff',

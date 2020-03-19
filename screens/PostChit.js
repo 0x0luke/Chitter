@@ -87,14 +87,14 @@ class PostChit extends Component {
                 'Cache-Control': 'no-cache',
             },
             body: POSTdata
-        }).then((response) => {
-            Alert.alert("Posted Chit!");
-            this.props.navigation.navigate("HomePage");
-        }).catch((error) =>{
-          Alert.alert("There was a problem posting your Chit, please try again");
-          console.log(error);
-         });
-    };
+            }).then((response) => {
+                Alert.alert("Posted Chit!");
+                this.props.navigation.navigate("HomePage");
+            }).catch((error) =>{
+              Alert.alert("There was a problem posting your Chit, please try again");
+              console.log(error);
+            });
+      };
 
   componentDidMount(){
     this.findCoords();

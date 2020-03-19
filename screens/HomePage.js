@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Text, View, ActivityIndicator,Alert, StyleSheet } from 'react-native';
+import { Text, View, ActivityIndicator,Alert, StyleSheet, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-community/async-storage';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import Constants from 'expo-constants';
 
 class HomePage extends Component {
     constructor(props){
@@ -12,11 +13,14 @@ class HomePage extends Component {
         this.getPosts = this.getPosts.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.renderChits = this.renderChits.bind(this);
+        this._onRefresh = this._onRefresh.bind(this);
+
         this.state = {
           login: true,
           authkey: '',
           loading: true,
           jsonData: [],
+          refreshing: false,
         }
         
       }
@@ -63,9 +67,8 @@ class HomePage extends Component {
 
       // this function crafts an object for each chit so it can be rendered in a view.
       renderChits(item){
-        console.log("renderChits called...")
         return(
-          <View>
+          <View style={style.ChitContainer}>
               <SafeAreaView style={style.scrollable}>
                 <Text style={style.NameStyle}>{item.user.given_name + " "+ item.user.family_name}</Text>
                 <Text style={style.LocationAndChitStyle}>{item.chit_content}</Text>
@@ -73,6 +76,13 @@ class HomePage extends Component {
               </SafeAreaView>
           </View>
         );
+      }
+
+      _onRefresh(){
+        this.setState({refreshing: true});
+        this.getPosts().then(() => {
+          this.setState({refreshing: false});
+        });
       }
 
 // actual render function
@@ -92,14 +102,15 @@ class HomePage extends Component {
               // this return makes it so each chit returned from the API is displayed on the page.
               return(
               <View>
-                <ScrollView>
+                <ScrollView
+                refreshControl={
+                  <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh}
+                  />
+                }>
                   {this.state.jsonData.map(item => this.renderChits(item))}
                 </ScrollView>
-                <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('PostChit')}
-                title="Post Chit"
-                style={style.PostChitButton}
-                ><Text style={style.ButtonTextStyle}>Post Chit</Text></TouchableOpacity>
               </View>
               
           );
@@ -109,6 +120,10 @@ class HomePage extends Component {
 
 const style = StyleSheet.create(
   {
+    ChitContainer:{
+      flex:1,
+      marginTop: Constants.statusBarHeight,
+    },
     scrollable:
     {
       marginBottom:5,
