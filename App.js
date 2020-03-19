@@ -7,6 +7,8 @@ import Register from './screens/Register'
 import HomePage from './screens/HomePage'
 import PostChit from './screens/PostChit'
 import LandingPage from './screens/LandingPage'
+import AccountEdit from './screens/AccountEdit'
+import Search from './screens/Search'
 
 // https://www.github.com/0x0luke/Chitter 
 
@@ -28,6 +30,12 @@ const AppStackNav = createStackNavigator({
   },
   LandingPage:{
     screen: LandingPage
+  },
+  Search:{
+    screen: Search
+  },
+  AccountEdit:{
+    screen: AccountEdit
   },
   },
   {

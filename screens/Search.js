@@ -2,7 +2,7 @@ import { Text,Alert,View, TextInput, StyleSheet, TouchableOpacity } from 'react-
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 
-class AccountEdit extends Component {
+class Search extends Component {
     constructor(props){
         super(props);
 
@@ -12,14 +12,12 @@ class AccountEdit extends Component {
         }
     }
 
-
-    render() {
+    render(){
         return(
-            <View>
-
-            </View>
+            <View></View>
         );
     }
+
 
 }
 
@@ -27,4 +25,4 @@ const style = StyleSheet.create({
     
 })
 
-export default AccountEdit;
+export default Search;
