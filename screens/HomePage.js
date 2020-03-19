@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Text, View, ActivityIndicator,Alert, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-community/async-storage';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 
 class HomePage extends Component {
     constructor(props){
@@ -38,7 +38,7 @@ class HomePage extends Component {
       }
 
       getPosts(){
-        return fetch('http://10.0.2.2:3333/api/v0.0.5/chits')
+        return fetch('http://10.0.2.2:3333/api/v0.0.5/chits?start=0&count=200')
        .then((response) => response.json())
        .then((responseJson) => {
       
@@ -52,6 +52,8 @@ class HomePage extends Component {
         console.log(error);
        });
       }
+
+      
 
       // waits to see until the compoment is opened, then runs the function to get the chits from the API
       componentDidMount() {
@@ -90,13 +92,14 @@ class HomePage extends Component {
               // this return makes it so each chit returned from the API is displayed on the page.
               return(
               <View>
-              {this.state.jsonData.map(item => this.renderChits(item))}
-                
-              <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('PostChit')}
-              title="Post Chit"
-              style={style.PostChitButton}
-              ><Text style={style.ButtonTextStyle}>Post Chit</Text></TouchableOpacity>
+                <ScrollView>
+                  {this.state.jsonData.map(item => this.renderChits(item))}
+                </ScrollView>
+                <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('PostChit')}
+                title="Post Chit"
+                style={style.PostChitButton}
+                ><Text style={style.ButtonTextStyle}>Post Chit</Text></TouchableOpacity>
               </View>
               
           );

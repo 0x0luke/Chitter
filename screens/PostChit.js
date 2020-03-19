@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, Alert, TextInput, StyleSheet } from 'react-native';
+import { Text, View, Alert, TextInput, StyleSheet, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import AsyncStorage from '@react-native-community/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -22,7 +22,8 @@ class PostChit extends Component {
             chit: '',
             login: true,
             userid: '',
-            location: '',
+            location: [],
+            locationPerms: false,
         }
     }
 
@@ -43,12 +44,19 @@ class PostChit extends Component {
     }
 
     // pull in geolocation coords
-    /*findCoords() {
-      Geolocation.getCurrentPosition(
+    async findCoords() {
+      if(!this.state.locationPerms){
+        this.state.locationPerms = androidLocationPerms();
+      }
+      await Geolocation.getCurrentPosition(
           (position) => {
               const location = JSON.stringify(position);
 
               this.setState({ location })
+          },
+          (error) =>
+          {
+            Alert.alert("Could not find location data: "+error.message);
           },
           {
               enableHighAccuracy: true,
@@ -56,22 +64,21 @@ class PostChit extends Component {
               maximumAge: 1000
           }
       );
-  };*/
+  };
 
     postChit(){
-
+      var today = Date.now();
       const jsonData = {
-        timestamp: today,
-        chit_content: this.state.chit,
-        location: this.state.location,
-      }
-
+        "timestamp": today,
+        "chit_content": this.state.chit,
+        "location": {
+          "longitude": this.state.location.longitude,
+          "latitude": this.state.location.latitude,
+        }
+      };
       const POSTdata = JSON.stringify(jsonData);
-
-        // gets the current date in unix/epoch time
-        var today = Date.parse(new Date())
-
-        return fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {
+      console.log(POSTdata);
+      return fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -90,7 +97,7 @@ class PostChit extends Component {
     };
 
   componentDidMount(){
-  //  this.findCoords();
+    this.findCoords();
     this.getCreds();
   }
 
@@ -156,5 +163,26 @@ const styles = StyleSheet.create({
   },
 
 })
+
+
+// requests access to the GPS coords from Android.
+async function androidLocationPerms(){
+	try {
+		const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+			{
+				title: 'Location Permission',
+				message:'Can Chittr use your location?',
+				buttonNeutral: 'Ask Me Later',
+				buttonNegative: 'No',
+				buttonPositive: 'Yes',
+			},
+		);
+		if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+			return true;
+		} else {
+			return false;
+		}} 
+	catch (err) {console.warn(err);}
+}
 
 export default PostChit;

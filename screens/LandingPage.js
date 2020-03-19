@@ -75,12 +75,6 @@ class LandingPage extends Component {
                 <Text style={style.ButtonTextStyle}>Post a Chit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={style.PostChitStyle}
-                    title="PostChit"
-                    onPress={()=>this.props.navigation.navigate('PostChit')}>
-                <Text style={style.ButtonTextStyle}>Post a Chit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
                     style={style.EditAccButtStyle}
                     title="Edit Account"
                     onPress={()=>this.props.navigation.navigate('AccountEdit')}>
