@@ -79,9 +79,14 @@ class HomePage extends Component {
       }
 
       _onRefresh(){
-        this.setState({refreshing: true});
+        this.setState({
+          refreshing: true,
+          jsonData: [],
+        });
         this.getPosts().then(() => {
-          this.setState({refreshing: false});
+          this.setState({
+            refreshing: false
+          });
         });
       }
 
