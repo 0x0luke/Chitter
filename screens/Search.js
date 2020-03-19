@@ -19,6 +19,8 @@ class Search extends Component {
             jsonData: [],
             CurrentUserID: '',
             authkey: '',
+            followingData:[],
+            isUserFollowing: false,
         }
     }
 
@@ -41,6 +43,7 @@ class Search extends Component {
             console.log("Error within Async: "+error);
             }
         }
+        
     // this function takes a ID of a user and searches for it in the database
     userSearch(q){
         console.log("Our q param passed in was: "+ q)
@@ -51,6 +54,24 @@ class Search extends Component {
         this.setState({
          loading: false,
          jsonData: responseJson,
+        });
+         
+       })
+       .catch((error) =>{
+        console.log(error);
+       });
+      }
+
+
+      GetCurrentFollowing(q){
+        console.log("Our q param passed in was: "+ q)
+        return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+q+'/following')
+       .then((response) => response.json())
+       .then((responseJson) => {
+      
+        this.setState({
+         loading: false,
+         followingData: responseJson,
         });
          
        })
