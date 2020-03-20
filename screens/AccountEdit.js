@@ -17,6 +17,7 @@ class AccountEdit extends Component {
             password: '',
             token: '',
             udid: '',
+            passwordConfirm: '',
 
         }
     }
@@ -50,6 +51,11 @@ class AccountEdit extends Component {
 
       const POSTdata = JSON.stringify(JSONdata);
 
+      if(this.state.password == this.state.passwordConfirm){
+
+        alert.Alert("Your password didn't match, Please try again")
+      }else{
+
         return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+id, {
           method: 'PATCH',
           headers: {
@@ -69,16 +75,18 @@ class AccountEdit extends Component {
                 console.log(error);
             });
       }
+    }
 
 
     render() {
         return(
             <View>
 
-        <TextInput style={styles.TextInputStyle} type='text' placeholder='Email' onChangeText={(email) => this.setState({email})}></TextInput>
+          <TextInput style={styles.TextInputStyle} type='text' placeholder='Email' onChangeText={(email) => this.setState({email})}></TextInput>
           <TextInput style={styles.TextInputStyle} type='text' placeholder='First Name' onChangeText={(username) => this.setState({username})}></TextInput>
           <TextInput style={styles.TextInputStyle} type='text' placeholder='Last Name' onChangeText={(family) => this.setState({family})}></TextInput>
           <TextInput style={styles.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(password) => this.setState({password})}></TextInput>
+          <TextInput style={styles.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(passwordConfirm) => this.setState({passwordConfirm})}></TextInput>
           <TouchableOpacity
           style={styles.UpdateButton}
           title = "Update"
