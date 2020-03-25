@@ -9,6 +9,9 @@ import PostChit from './screens/PostChit'
 import LandingPage from './screens/LandingPage'
 import AccountEdit from './screens/AccountEdit'
 import Search from './screens/Search'
+import MyAccount from './screens/MyAccount'
+import Followers from './screens/Followers'
+import Following from './screens/Following'
 
 // https://www.github.com/0x0luke/Chitter 
 
@@ -36,6 +39,15 @@ const AppStackNav = createStackNavigator({
   },
   AccountEdit:{
     screen: AccountEdit
+  },
+  MyAccount:{
+    screen: MyAccount
+  },
+  Followers: {
+    screen: Followers
+  },
+  Following:{
+    screen: Following
   },
   },
   {

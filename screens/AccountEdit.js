@@ -15,9 +15,8 @@ class AccountEdit extends Component {
             username: '',
             family: '',
             password: '',
-            token: '',
+            authkey: '',
             udid: '',
-            passwordConfirm: '',
 
         }
     }
@@ -28,12 +27,11 @@ class AccountEdit extends Component {
           var userID = await AsyncStorage.getItem('id');
           var getAuthKey = await AsyncStorage.getItem('X-Authorization');
 
-          console.log(getAuthKey);
-
           this.setState({ 
             udid: userID,
             authkey: getAuthKey
          });
+
         }
         catch(error){
           console.log("Error within Async: "+error);
@@ -54,6 +52,7 @@ class AccountEdit extends Component {
       if(this.state.password == this.state.passwordConfirm){
 
         alert.Alert("Your password didn't match, Please try again")
+
       }else{
 
         return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+id, {
@@ -82,13 +81,13 @@ class AccountEdit extends Component {
         return(
             <View>
 
-          <TextInput style={styles.TextInputStyle} type='text' placeholder='Email' onChangeText={(email) => this.setState({email})}></TextInput>
-          <TextInput style={styles.TextInputStyle} type='text' placeholder='First Name' onChangeText={(username) => this.setState({username})}></TextInput>
-          <TextInput style={styles.TextInputStyle} type='text' placeholder='Last Name' onChangeText={(family) => this.setState({family})}></TextInput>
-          <TextInput style={styles.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(password) => this.setState({password})}></TextInput>
-          <TextInput style={styles.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(passwordConfirm) => this.setState({passwordConfirm})}></TextInput>
+          <TextInput style={style.TextInputStyle} type='text' placeholder='Email' onChangeText={(email) => this.setState({email})}></TextInput>
+          <TextInput style={style.TextInputStyle} type='text' placeholder='First Name' onChangeText={(username) => this.setState({username})}></TextInput>
+          <TextInput style={style.TextInputStyle} type='text' placeholder='Last Name' onChangeText={(family) => this.setState({family})}></TextInput>
+          <TextInput style={style.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(password) => this.setState({password})}></TextInput>
+          <TextInput style={style.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(passwordConfirm) => this.setState({passwordConfirm})}></TextInput>
           <TouchableOpacity
-          style={styles.UpdateButton}
+          style={style.UpdateButton}
           title = "Update"
           onPress = {this.updateDetails(this.state.userID)}
           ><Text style={styles.ButtonTextStyle}>Update Details</Text></TouchableOpacity>
