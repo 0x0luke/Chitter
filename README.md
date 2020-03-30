@@ -24,8 +24,6 @@ This was the assesment for 50% of my Mobile application unit, It features a reac
 
 ### Prerequisites <a name="Prerequisites"></a>
 
-What things you need to install the software and how to install them.
-
 ```
 1. React Native enviroment
 2. Npm
