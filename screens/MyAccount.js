@@ -114,6 +114,12 @@ class MyAccount extends Component {
                 onPress={()=>this.props.navigation.navigate('Following')}>
             <Text style={styles.ButtonTextStyle}>View Following</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.EditButton}
+                title="EditAcc"
+                onPress={()=>this.props.navigation.navigate('AccountEdit')}>
+            <Text style={styles.ButtonTextStyle}>Account Edit</Text>
+            </TouchableOpacity>
             </View>
         );
     }
@@ -145,6 +151,19 @@ const style = StyleSheet.create({
         borderRadius:5
       },
       FollowingButton: {
+        flex: 1,
+        justifyContent: 'center',
+        marginTop: 350,
+        marginHorizontal: 84,
+        fontSize: 20,
+        color:'#ffffff',
+        textAlign:'center',
+        padding:20,
+        backgroundColor: '#202646',
+        borderRadius:5
+      }, 
+
+      EditButton: {
         flex: 1,
         justifyContent: 'center',
         marginTop: 350,
