@@ -14,7 +14,7 @@
 ## 📝 Table of Contents
 
 - [About](#about)
-- [Getting Started](#getting_started)
+- [Prerequisites](#Prerequisites)
 - [Usage](#usage)
 - [Built Using](#built_using)
 - [Authors](#authors)
@@ -22,11 +22,7 @@
 
 This was the assesment for 50% of my Mobile application unit, It features a react-native mobile application that interacts with a Javascript backend API. It allows users to view chits, post their own and connect with their friends.
 
-## 🏁 Getting Started <a name = "getting_started"></a>
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
-
-### Prerequisites
+### Prerequisites <a name="Prerequisites"></a>
 
 What things you need to install the software and how to install them.
 
