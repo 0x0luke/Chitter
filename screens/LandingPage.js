@@ -92,7 +92,7 @@ class LandingPage extends Component {
                 <TouchableOpacity
                     style={style.LogoutButtStyle}
                     title="Logout"
-                    onPress={()=>this.props.navigation.navigate('WelcomeScreen')}>
+                    onPress={()=>this.props.navigation.navigate('Home')}>
                 <Text style={style.ButtonTextStyle}>Logout</Text>
                 </TouchableOpacity>
             </View>

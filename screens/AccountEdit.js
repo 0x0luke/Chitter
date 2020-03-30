@@ -17,6 +17,7 @@ class AccountEdit extends Component {
             password: '',
             authkey: '',
             udid: '',
+            passwordConfirm:'',
 
         }
     }
@@ -49,9 +50,9 @@ class AccountEdit extends Component {
 
       const POSTdata = JSON.stringify(JSONdata);
 
-      if(this.state.password == this.state.passwordConfirm){
+      if(this.state.password != this.state.passwordConfirm){
 
-        alert.Alert("Your password didn't match, Please try again")
+        Alert.alert("Your password didn't match, Please try again")
 
       }else{
 
@@ -60,7 +61,7 @@ class AccountEdit extends Component {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'X-Authorization': this.state.token,
+            'X-Authorization': this.state.authkey,
           },
           body: POSTdata
         })
@@ -76,6 +77,9 @@ class AccountEdit extends Component {
       }
     }
 
+    componentDidMount(){
+      this.getCreds()
+    }
 
     render() {
         return(
@@ -85,12 +89,12 @@ class AccountEdit extends Component {
           <TextInput style={style.TextInputStyle} type='text' placeholder='First Name' onChangeText={(username) => this.setState({username})}></TextInput>
           <TextInput style={style.TextInputStyle} type='text' placeholder='Last Name' onChangeText={(family) => this.setState({family})}></TextInput>
           <TextInput style={style.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(password) => this.setState({password})}></TextInput>
-          <TextInput style={style.TextInputStyle} type='password' placeholder='Password' secureTextEntry={true} onChangeText={(passwordConfirm) => this.setState({passwordConfirm})}></TextInput>
+          <TextInput style={style.TextInputStyle} type='password' placeholder='Confirm Password' secureTextEntry={true} onChangeText={(passwordConfirm) => this.setState({passwordConfirm})}></TextInput>
           <TouchableOpacity
           style={style.UpdateButton}
           title = "Update"
-          onPress = {this.updateDetails(this.state.userID)}
-          ><Text style={styles.ButtonTextStyle}>Update Details</Text></TouchableOpacity>
+          onPress = {()=>this.updateDetails(this.state.udid)}
+          ><Text style={style.ButtonTextStyle}>Update Details</Text></TouchableOpacity>
             </View>
         );
     }

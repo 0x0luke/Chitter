@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import Constants from 'expo-constants';
 
-class HomePage extends Component {
+class Following extends Component {
     constructor(props){
         super(props);
 
